@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+   user-service:
+      build:
+         context: ./user-service
+      container_name: user-service
+      environment:
+         SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_account_details
+         SPRING_DATASOURCE_USERNAME: root
+         SPRING_DATASOURCE_PASSWORD: root
+      ports:
+      - 8080:8080
+      networks:
+      - app_network
+      restart: always
+
+   mysql:
+      image: mysql:8.0
+      container_name: mysql
+      environment:
+         MYSQL_ROOT_PASSWORD: root
+         MYSQL_DATABASE: user_account_details
+      ports:
+      - 3306:3306
+      networks:
+      - app_network
+      restart: always
+
+networks:
+   app_network:
+      driver: bridge
